@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meeting to Action — Agent Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --bg-secondary: #f7f7f5;
+    --bg-hover: #f1f1ef;
+    --text: #37352f;
+    --text-secondary: #787774;
+    --text-tertiary: #9b9a97;
+    --border: rgba(55,53,47,.09);
+    --border-mid: rgba(55,53,47,.16);
+    --purple-bg: #f4f0ff;
+    --purple-text: #5b21b6;
+    --purple-border: #ddd6fe;
+    --blue-bg: #e8f4fd;
+    --blue-text: #1d4ed8;
+    --blue-border: #bfdbfe;
+    --green-bg: #ecfdf5;
+    --green-text: #065f46;
+    --green-border: #a7f3d0;
+    --amber-bg: #fffbeb;
+    --amber-text: #92400e;
+    --amber-border: #fde68a;
+    --red-bg: #fef2f2;
+    --red-text: #991b1b;
+    --red-border: #fecaca;
+    --gray-bg: #f9fafb;
+    --gray-text: #374151;
+    --gray-border: #e5e7eb;
+    --radius: 4px;
+    --radius-lg: 8px;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 96px 96px 200px;
+  }
+
+  @media (max-width: 768px) {
+    .page { padding: 48px 24px 120px; }
+  }
+
+  /* Cover */
+  .cover {
+    width: calc(100% + 192px);
+    margin-left: -96px;
+    height: 220px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 70%, #533483 100%);
+    margin-bottom: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    .cover { width: calc(100% + 48px); margin-left: -24px; }
+  }
+
+  .cover-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .cover-glow {
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 200px;
+    background: radial-gradient(ellipse, rgba(139,92,246,.3) 0%, transparent 70%);
+  }
+
+  /* Icon + title block */
+  .page-icon {
+    font-size: 60px;
+    line-height: 1;
+    margin-bottom: 16px;
+    display: block;
+    margin-top: -30px;
+  }
+
+  h1.page-title {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -.02em;
+    line-height: 1.2;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .page-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Properties block */
+  .props {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .prop-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 8px;
+    align-items: center;
+    padding: 4px 0;
+    font-size: 14px;
+  }
+
+  .prop-label {
+    color: var(--text-secondary);
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .prop-label-icon { font-size: 13px; }
+
+  .prop-value { color: var(--text); }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 3px;
+    line-height: 1.5;
+  }
+
+  .tag-purple { background: var(--purple-bg); color: var(--purple-text); }
+  .tag-green  { background: var(--green-bg);  color: var(--green-text); }
+  .tag-blue   { background: var(--blue-bg);   color: var(--blue-text); }
+  .tag-amber  { background: var(--amber-bg);  color: var(--amber-text); }
+
+  /* Typography */
+  h2 {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    color: var(--text);
+    margin-top: 48px;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text);
+    margin-top: 28px;
+    margin-bottom: 8px;
+  }
+
+  p {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 12px;
+    line-height: 1.7;
+  }
+
+  a { color: var(--blue-text); text-decoration: underline; text-underline-offset: 2px; }
+  a:hover { opacity: .75; }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 40px 0;
+  }
+
+  /* Callout */
+  .callout {
+    display: flex;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: var(--radius-lg);
+    margin: 16px 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .callout-icon { font-size: 18px; flex-shrink: 0; line-height: 1.4; }
+  .callout-text { color: var(--text); flex: 1; }
+  .callout-text strong { font-weight: 500; }
+
+  .callout-purple { background: var(--purple-bg); border: 1px solid var(--purple-border); }
+  .callout-green  { background: var(--green-bg);  border: 1px solid var(--green-border); }
+  .callout-blue   { background: var(--blue-bg);   border: 1px solid var(--blue-border); }
+  .callout-amber  { background: var(--amber-bg);  border: 1px solid var(--amber-border); }
+  .callout-gray   { background: var(--bg-secondary); border: 1px solid var(--border-mid); }
+
+  /* Code block */
+  .code-block {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    font-family: 'DM Mono', 'Fira Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--text);
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin: 12px 0;
+    overflow-x: auto;
+  }
+
+  /* Database schema table */
+  .schema-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin: 16px 0;
+    border: 1px solid var(--border-mid);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .schema-table thead tr {
+    background: var(--bg-secondary);
+  }
+
+  .schema-table th {
+    text-align: left;
+    padding: 8px 12px;
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-mid);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+
+  .schema-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .schema-table tr:last-child td { border-bottom: none; }
+
+  .schema-table tr:hover td { background: var(--bg-hover); }
+
+  .field-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text);
+  }
+
+  .field-type {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .field-note {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+  }
+
+  .field-note em { color: var(--red-text); font-style: normal; font-weight: 500; }
+  .field-note strong { color: var(--green-text); font-weight: 500; }
+
+  /* Step list */
+  .step-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 16px 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    transition: background .1s;
+  }
+
+  .step-item:last-child { border-bottom: none; }
+  .step-item:hover { background: var(--bg-hover); }
+
+  .step-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .step-num-purple { background: var(--purple-bg); color: var(--purple-text); }
+  .step-num-teal   { background: var(--green-bg);  color: var(--green-text); }
+  .step-num-blue   { background: var(--blue-bg);   color: var(--blue-text); }
+
+  .step-content { flex: 1; }
+  .step-title { font-weight: 500; font-size: 14px; color: var(--text); margin-bottom: 2px; }
+  .step-desc  { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+  /* Flow diagram (pure CSS) */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin: 24px 0;
+  }
+
+  .flow-node {
+    width: 100%;
+    max-width: 480px;
+    padding: 12px 20px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-mid);
+    text-align: center;
+    font-size: 13.5px;
+    font-weight: 500;
+  }
+
+  .flow-arrow {
+    width: 1px;
+    height: 24px;
+    background: var(--border-mid);
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .flow-arrow::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-right: 1.5px solid var(--text-tertiary);
+    border-bottom: 1.5px solid var(--text-tertiary);
+    transform: rotate(45deg);
+    margin-bottom: -3px;
+  }
+
+  .flow-label {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin: 2px 0;
+    font-style: italic;
+  }
+
+  .fn-purple { background: var(--purple-bg); border-color: var(--purple-border); color: var(--purple-text); }
+  .fn-green  { background: var(--green-bg);  border-color: var(--green-border);  color: var(--green-text); }
+  .fn-blue   { background: var(--blue-bg);   border-color: var(--blue-border);   color: var(--blue-text); }
+  .fn-amber  { background: var(--amber-bg);  border-color: var(--amber-border);  color: var(--amber-text); }
+  .fn-gray   { background: var(--bg-secondary); border-color: var(--border-mid); color: var(--text); }
+  .fn-sub    { font-size: 11.5px; font-weight: 400; color: inherit; opacity: .75; margin-top: 2px; }
+
+  /* Checklist */
+  .checklist { list-style: none; margin: 12px 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 5px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .checklist li::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--border-mid);
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .checklist li.checked::before {
+    background: #2eaadc;
+    border-color: #2eaadc;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6l3 3 5-5' stroke='white' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-size: 10px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  /* Quote */
+  .quote {
+    border-left: 3px solid var(--border-mid);
+    padding: 4px 16px;
+    margin: 16px 0;
+    color: var(--text-secondary);
+    font-size: 14.5px;
+    font-style: italic;
+  }
+
+  /* TOC */
+  .toc {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    margin: 24px 0;
+  }
+
+  .toc-title {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+  }
+
+  .toc ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .toc ul li { font-size: 13.5px; }
+  .toc ul li a { color: var(--text); text-decoration: none; }
+  .toc ul li a:hover { color: var(--blue-text); text-decoration: underline; }
+  .toc-sub { padding-left: 16px; }
+
+  /* Inline code */
+  code {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-mid);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--red-text);
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 80px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 12.5px;
+    color: var(--text-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: gap;
+    gap: 8px;
+  }
+
+  .notion-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    font-size: 13px;
+  }
+
+  /* Section anchor offset */
+  [id] { scroll-margin-top: 24px; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-grid"></div>
+  <div class="cover-glow"></div>
+</div>
+
+<div class="page">
+
+  <span class="page-icon">⚡</span>
+
+  <h1 class="page-title">Meeting to Action</h1>
+  <p class="page-desc">A Notion Custom Agent that transforms meeting transcripts into structured tasks and Slack notifications — automatically, from the moment your call ends.</p>
+
+  <div class="props">
+    <div class="prop-row">
+      <span class="prop-label"><span class="prop-label-icon">🏷️</span> Type</span>
+      <span class="prop-value"><span class="tag tag-purple">Notion Custom Agent</span></span>
+    </div>
+    <div class="prop-row">
+      <span class="prop-label"><span class="prop-label-icon">🔗</span> Integrations</span>
+      <span class="prop-value" style="display:flex;gap:6px;flex-wrap:wrap;">
+        <span class="tag tag-blue">Notion Databases</span>
+        <span class="tag tag-green">Slack MCP</span>
+        <span class="tag tag-amber">Notion Calendar</span>
+      </span>
+    </div>
+    <div class="prop-row">
+      <span class="prop-label"><span class="prop-label-icon">⚙️</span> Trigger</span>
+      <span class="prop-value" style="font-size:14px;">Status → <code>Needs Processing</code> on Meeting Notes</span>
+    </div>
+    <div class="prop-row">
+      <span class="prop-label"><span class="prop-label-icon">📦</span> Starter kit</span>
+      <span class="prop-value"><a href="https://fine-holly-02a.notion.site/Hackathon-Starter-Kit-Duplicate-Me-7e25e722d624429ca459f9911d7a5c14" target="_blank">Duplicate workspace →</a></span>
+    </div>
+    <div class="prop-row">
+      <span class="prop-label"><span class="prop-label-icon">🏆</span> Built for</span>
+      <span class="prop-value"><span class="tag tag-purple">Notion Custom Agent Buildathon</span></span>
+    </div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="toc-title">On this page</div>
+    <ul>
+      <li><a href="#problem">The problem it solves</a></li>
+      <li><a href="#how-it-works">How it works</a></li>
+      <li><a href="#architecture">Architecture</a>
+        <ul class="toc-sub">
+          <li><a href="#pipeline">The full pipeline</a></li>
+          <li><a href="#databases">Database schemas</a></li>
+          <li><a href="#prompt">The instruction prompt</a></li>
+        </ul>
+      </li>
+      <li><a href="#cost">Cost efficiency design</a></li>
+      <li><a href="#demo">See it in action</a></li>
+      <li><a href="#setup">Setting it up</a></li>
+    </ul>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROBLEM -->
+  <h2 id="problem">The problem it solves</h2>
+
+  <p>Every team has a version of this: a meeting ends, people scatter, and the action items live only in a Notion page that nobody will open again until the next standup — when someone asks "wait, who was doing the API work?"</p>
+
+  <div class="quote">
+    The real cost isn't the 20 minutes someone eventually spends creating tasks. It's the two days of drift before they do it.
+  </div>
+
+  <p>Meeting to Action closes that loop automatically. The moment a call ends and notes are ready, the agent reads the transcript, extracts every action item, creates structured tasks with real owners and deadlines, and posts a formatted summary to Slack — before anyone has closed their laptop.</p>
+
+  <div class="callout callout-amber">
+    <span class="callout-icon">📊</span>
+    <span class="callout-text">For a team running 3 meetings per week, this agent eliminates roughly <strong>45 minutes of manual task creation</strong>, 2–3 clarifying Slack threads, and one status-check meeting per sprint.</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- HOW IT WORKS -->
+  <h2 id="how-it-works">How it works</h2>
+
+  <p>The workflow has two modes depending on how you capture meeting notes:</p>
+
+  <h3>Mode A — With Notion AI Meeting Notes (recommended)</h3>
+  <ul class="checklist">
+    <li class="checked">Calendar event with a Google Meet link exists in Notion Calendar</li>
+    <li class="checked">Call happens — Notion Calendar transcribes in real time via <code>/note</code></li>
+    <li class="checked">AI Meeting Notes page lands automatically in Meeting Notes database</li>
+    <li class="checked">Agent triggers, extracts tasks, posts to Slack — zero manual steps</li>
+  </ul>
+
+  <h3>Mode B — With manual notes</h3>
+  <ul class="checklist">
+    <li class="checked">Create a new page in Meeting Notes, write notes during the call</li>
+    <li class="checked">Click <strong>Process Meeting</strong> button when notes are ready</li>
+    <li class="checked">Agent triggers, extracts tasks, posts to Slack</li>
+  </ul>
+
+  <div class="callout callout-green">
+    <span class="callout-icon">✅</span>
+    <span class="callout-text">Both modes produce identical output. Mode A is fully zero-touch from call end to Slack message. Mode B requires one deliberate button click — which also serves as a quality gate ensuring notes are complete before processing.</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ARCHITECTURE -->
+  <h2 id="architecture">Architecture</h2>
+
+  <h3 id="pipeline">The full pipeline</h3>
+
+  <div class="flow">
+    <div class="flow-node fn-gray">
+      <div>Meeting ends</div>
+      <div class="fn-sub">Call transcript captured via /note or manually written</div>
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node fn-purple">
+      <div>Trigger fires</div>
+      <div class="fn-sub">Status → Needs Processing on Meeting Notes page</div>
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node fn-blue">
+      <div>Gate 0A — Status check</div>
+      <div class="fn-sub">Halt if status ≠ Needs Processing</div>
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node fn-blue">
+      <div>Gate 0B — Idempotency check</div>
+      <div class="fn-sub">Halt if Agent Ran = true or tasks already linked</div>
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node fn-blue">
+      <div>Gate 1 — Content check</div>
+      <div class="fn-sub">Halt if note body under 100 words → Status: Too Short</div>
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node fn-purple">
+      <div>Extraction</div>
+      <div class="fn-sub">Scan for action verbs → extract task, owner, time reference</div>
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node fn-purple">
+      <div>Resolution</div>
+      <div class="fn-sub">Match names → Notion users · resolve dates → ISO dates · infer priority</div>
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node fn-green">
+      <div>Tasks created in Notion</div>
+      <div class="fn-sub">One row per action item, linked to Source Meeting</div>
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node fn-green">
+      <div>Meeting marked done</div>
+      <div class="fn-sub">Agent Ran = true · Status = Done</div>
+    </div>
+    <div class="flow-arrow"></div>
+    <div class="flow-node fn-amber">
+      <div>Slack message posted</div>
+      <div class="fn-sub">Task list with owners, due dates, and Notion link</div>
+    </div>
+  </div>
+
+  <div class="callout callout-purple">
+    <span class="callout-icon">🔐</span>
+    <span class="callout-text"><strong>Why three gates before extraction?</strong> Each gate is cheaper than a full run. The idempotency check (Gate 0B) is a single database read — if the agent fires twice on the same page (re-trigger, testing), it halts at essentially zero cost instead of duplicating all tasks.</span>
+  </div>
+
+  <!-- DATABASES -->
+  <h3 id="databases">Database schemas</h3>
+
+  <p>The agent reads from and writes to three databases. Access is granted per-database with least-privilege permissions — the agent is blind to everything else in the workspace.</p>
+
+  <h3>Meeting Notes — agent reads + writes status fields</h3>
+
+  <table class="schema-table">
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Role</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="field-name">Title</span></td>
+        <td><span class="field-type">Title</span></td>
+        <td><span class="tag tag-blue" style="font-size:11px;">reads</span></td>
+        <td><span class="field-note">Format: "Meeting Name — Date"</span></td>
+      </tr>
+      <tr>
+        <td><span class="field-name">Meeting Date</span></td>
+        <td><span class="field-type">Date</span></td>
+        <td><span class="tag tag-blue" style="font-size:11px;">reads</span></td>
+        <td><span class="field-note"><em>Critical.</em> Anchor for all date resolution rules.</span></td>
+      </tr>
+      <tr>
+        <td><span class="field-name">Attendees</span></td>
+        <td><span class="field-type">Person (multi)</span></td>
+        <td><span class="tag tag-blue" style="font-size:11px;">reads</span></td>
+        <td><span class="field-note">Checked first for name resolution — avoids DB lookup.</span></td>
+      </tr>
+      <tr>
+        <td><span class="field-name">Status</span></td>
+        <td><span class="field-type">Select</span></td>
+        <td><span class="tag tag-green" style="font-size:11px;">reads + writes</span></td>
+        <td><span class="field-note">Options: <code>Draft</code> · <code>Needs Processing</code> · <code>Done</code> · <code>Too Short</code></span></td>
+      </tr>
+      <tr>
+        <td><span class="field-name">Agent Ran</span></td>
+        <td><span class="field-type">Checkbox</span></td>
+        <td><span class="tag tag-green" style="font-size:11px;">reads + writes</span></td>
+        <td><span class="field-note"><strong>Idempotency flag.</strong> If true → agent halts immediately at zero cost.</span></td>
+      </tr>
+      <tr>
+        <td><span class="field-name">Process Meeting</span></td>
+        <td><span class="field-type">Button</span></td>
+        <td><span class="tag tag-amber" style="font-size:11px;">trigger</span></td>
+        <td><span class="field-note">Sets Status → Needs Processing on click. The human quality gate.</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Tasks — agent creates rows here</h3>
+
+  <table class="schema-table">
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Role</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="field-name">Task Name</span></td>
+        <td><span class="field-type">Title</span></td>
+        <td><span class="tag tag-green" style="font-size:11px;">writes</span></td>
+        <td><span class="field-note">Imperative action phrase extracted from notes.</span></td>
+      </tr>
+      <tr>
+        <td><span class="field-name">Assignee</span></td>
+        <td><span class="field-type">Person</span></td>
+        <td><span class="tag tag-green" style="font-size:11px;">writes</span></td>
+        <td><span class="field-note">Resolved from Attendees, then Team Directory. Never guessed.</span></td>
+      </tr>
+      <tr>
+        <td><span class="field-name">Due Date</span></td>
+        <td><span class="field-type">Date</span></td>
+        <td><span class="tag tag-green" style="font-size:11px;">writes</span></td>
+        <td><span class="field-note"><em>Name must be exact.</em> Resolved via explicit date rules from prompt.</span></td>
+      </tr>
+      <tr>
+        <td><span class="field-name">Priority</span></td>
+        <td><span class="field-type">Select</span></td>
+        <td><span class="tag tag-green" style="font-size:11px;">writes</span></td>
+        <td><span class="field-note">Options: <code>High</code> · <code>Medium</code> · <code>Low</code> — inferred from urgency language.</span></td>
+      </tr>
+      <tr>
+        <td><span class="field-name">Source Meeting</span></td>
+        <td><span class="field-type">Relation → Meeting Notes</span></td>
+        <td><span class="tag tag-green" style="font-size:11px;">writes</span></td>
+        <td><span class="field-note"><strong>Traceability + idempotency.</strong> Links every task to its origin meeting.</span></td>
+      </tr>
+      <tr>
+        <td><span class="field-name">Agent Created</span></td>
+        <td><span class="field-type">Checkbox</span></td>
+        <td><span class="tag tag-green" style="font-size:11px;">writes</span></td>
+        <td><span class="field-note">Always true on agent-created rows. Enables filtered audit views.</span></td>
+      </tr>
+      <tr>
+        <td><span class="field-name">Notes</span></td>
+        <td><span class="field-type">Text</span></td>
+        <td><span class="tag tag-green" style="font-size:11px;">writes</span></td>
+        <td><span class="field-note">Only populated when owner is unresolvable: "Owner unclear — mentioned as: [name]"</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Team Directory — Agent View only (3 columns exposed)</h3>
+
+  <table class="schema-table">
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Type</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="field-name">Full Name</span></td>
+        <td><span class="field-type">Title</span></td>
+        <td><span class="field-note">Must match how names appear in meeting notes exactly.</span></td>
+      </tr>
+      <tr>
+        <td><span class="field-name">Notion User</span></td>
+        <td><span class="field-type">Person</span></td>
+        <td><span class="field-note">The actual Notion account assigned to the task.</span></td>
+      </tr>
+      <tr>
+        <td><span class="field-name">Slack Handle</span></td>
+        <td><span class="field-type">Text</span></td>
+        <td><span class="field-note">Used for @mentions in Slack output. Format: <code>@firstname</code></span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-blue">
+    <span class="callout-icon">💡</span>
+    <span class="callout-text"><strong>Why an Agent View?</strong> The full Team Directory may have 20+ columns. The agent reads every exposed column as context on every name lookup. Hiding irrelevant columns cuts token usage per lookup by ~85% — one of the biggest single efficiency gains in the build.</span>
+  </div>
+
+  <!-- PROMPT -->
+  <h3 id="prompt">The instruction prompt</h3>
+
+  <p>The prompt is a typed SOP — a rigid decision tree where every step produces a structured output that feeds the next. Vague instructions become expensive reasoning loops. Explicit rules become cheap pattern matching.</p>
+
+<div class="code-block">You are the Meeting to Action agent. Your job is to
+extract action items from meeting notes and create tasks
+in the Tasks database. You do not summarise, you do not
+add content to pages, you do not modify the page body
+under any circumstances, you do not send messages unless
+all tasks are confirmed created.
+
+Default Slack channel: #your-channel
+
+═══ STEP 0A — STATUS GATE ═══
+Read "Status" on the triggered page.
+If Status ≠ "Needs Processing" → stop immediately.
+
+═══ STEP 0B — IDEMPOTENCY CHECK ═══
+1. If "Agent Ran" = true → stop immediately.
+2. Query Tasks where Source Meeting = this page.
+   If any rows exist → stop immediately.
+
+═══ STEP 1 — CONTENT CHECK ═══
+Count words in page body (not property fields).
+If under 100 → set Status = "Too Short", stop.
+
+═══ STEP 2 — READ CONTEXT ═══
+Hold in memory:
+  MEETING_DATE = Meeting Date property
+  ATTENDEES    = Attendees property list
+  NOTES_BODY   = full page body text
+Do not modify the page body at any point.
+
+═══ STEP 3 — EXTRACT ACTION ITEMS ═══
+Scan NOTES_BODY for: will · needs to · should ·
+agreed to · volunteered · is responsible for ·
+action: · TODO: · must · has to · going to
+
+For each match extract:
+  [action phrase] | [name] | [time reference]
+
+Skip: decisions with no assigned action.
+No name found → "Unassigned"
+No time reference → leave Due Date blank
+
+═══ STEP 4 — RESOLVE OWNERS ═══
+1. Check ATTENDEES list first.
+2. If not found → query Team Directory Agent View.
+3. If still not found → blank Assignee +
+   Notes: "Owner unclear — mentioned as: [name]"
+Never guess. Never approximate.
+
+═══ STEP 5 — RESOLVE DATES ═══
+Anchor = MEETING_DATE
+"today"            → MEETING_DATE
+"tomorrow"         → MEETING_DATE + 1 day
+"this week"        → Friday of MEETING_DATE week
+"end of this week" → Friday of MEETING_DATE week
+"by [weekday]"     → nearest upcoming weekday
+"next week"        → Friday of following week
+"end of next week" → Friday of following week
+"EOD"              → MEETING_DATE
+No reference       → blank
+
+═══ STEP 6 — INFER PRIORITY ═══
+High   → urgent · blocking · critical · must ·
+         ASAP · launch · deploy · release ·
+         date within 48h of MEETING_DATE
+Low    → eventually · nice to have · no rush ·
+         someday · when you get a chance
+Medium → everything else (default)
+
+═══ STEP 7 — CREATE TASKS ═══
+One row per extracted action item in Tasks DB:
+  Task Name      = imperative action phrase
+  Assignee       = resolved Notion user or blank
+  Due Date       = resolved ISO date or blank
+  Priority       = High / Medium / Low
+  Source Meeting = this page
+  Agent Created  = true
+  Notes          = unresolved owner note if needed
+
+═══ STEP 8 — VERIFY ═══
+Count created rows vs extracted items.
+If mismatch → retry missing rows once.
+If still mismatched → continue with warning.
+
+═══ STEP 9 — MARK DONE ═══
+Set "Agent Ran" = true on this page.
+Set "Status" = "Done" on this page.
+
+═══ STEP 10 — POST TO SLACK ═══
+Only after Step 9. Skip if zero tasks created.
+
+*[N] action items from [Title] — [MEETING_DATE]*
+
+→ *[First name]* — [Task Name] (due [date] or "no date set")
+[sorted: High → Medium → Low]
+
+*Needs owner:*
+→ [Task Name] — [Notes field content]
+
+View in Notion → [link to this page]
+
+If Step 8 had a warning:
+⚠ [X] of [Y] items created — check Notion for gaps.</div>
+
+  <div class="divider"></div>
+
+  <!-- COST EFFICIENCY -->
+  <h2 id="cost">Cost efficiency design</h2>
+
+  <p>Notion Custom Agents are billed per action. The architecture of this agent is designed to minimise actions on every code path.</p>
+
+  <ul class="step-list">
+    <li class="step-item">
+      <div class="step-num step-num-purple">1</div>
+      <div class="step-content">
+        <div class="step-title">Three gates before expensive work</div>
+        <div class="step-desc">Status check → idempotency check → content check. Each costs 1–2 actions. A duplicate trigger exits at Gate 0B for 1 action instead of re-running the full pipeline.</div>
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num step-num-purple">2</div>
+      <div class="step-content">
+        <div class="step-title">Attendees-first name resolution</div>
+        <div class="step-desc">The agent checks the Attendees field (already in memory) before querying Team Directory. For a 6-person meeting where everyone is tagged, zero additional DB queries are needed for name resolution.</div>
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num step-num-purple">3</div>
+      <div class="step-content">
+        <div class="step-title">Agent View with 3 columns</div>
+        <div class="step-desc">The Team Directory Agent View exposes only Full Name, Notion User, and Slack Handle. The full directory may have 20+ columns. Hiding them cuts token cost on each lookup by ~85%.</div>
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num step-num-purple">4</div>
+      <div class="step-content">
+        <div class="step-title">Typed SOP prompt</div>
+        <div class="step-desc">Every step produces a typed intermediate output. Explicit verb lists, exact date resolution rules, and keyword-based priority inference replace open-ended reasoning with pattern matching — the cheapest possible AI operation.</div>
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num step-num-teal">5</div>
+      <div class="step-content">
+        <div class="step-title">Slack fires last and conditionally</div>
+        <div class="step-desc">Step 10 only executes after Step 9 confirms both writes succeeded. If zero tasks were created (e.g. a decisions-only meeting), no Slack message is posted at all.</div>
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num step-num-teal">6</div>
+      <div class="step-content">
+        <div class="step-title">Estimated cost per run: ~15 actions</div>
+        <div class="step-desc">Measured on a real meeting with 7 action items across 2 attendees. vs. 20–40+ actions for an unoptimised agent with no gates, full DB access, and a vague extraction prompt.</div>
+      </div>
+    </li>
+  </ul>
+
+  <div class="divider"></div>
+
+  <h2 id="demo">See it in action</h2>
+
+  <p>The demo below shows a real end-to-end run — from a live meeting transcript to tasks in Notion and a formatted Slack message, with two named attendees resolved to their accounts.</p>
+
+  <a href="https://www.loom.com/share/fb4f8cc9f1244a659f312d794759b54b" target="_blank" style="text-decoration:none;display:block;margin:16px 0;">
+    <div style="border:1px solid var(--border-mid);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;" onmouseover="this.style.borderColor='#1d4ed8'" onmouseout="this.style.borderColor='rgba(55,53,47,.16)'">
+      <div style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);height:180px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:32px 32px;"></div>
+        <div style="width:56px;height:56px;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.2);position:relative;z-index:1;">
+          <div style="width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:18px solid white;margin-left:4px;"></div>
+        </div>
+      </div>
+      <div style="padding:14px 16px;background:var(--bg-secondary);border-top:1px solid var(--border);">
+        <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:2px;">Streamlining Task Management from Architectural Meetings</div>
+        <div style="font-size:12.5px;color:var(--text-secondary);">Watch on Loom · Meeting to Action · full pipeline demo</div>
+      </div>
+    </div>
+  </a>
+
+  <div class="divider"></div>
+
+  <h2 id="setup">Setting it up</h2>
+
+  <div class="callout callout-green">
+    <span class="callout-icon">🚀</span>
+    <span class="callout-text"><strong>Quickstart:</strong> Duplicate the workspace from the Starter Kit link below, add your team members to Team Directory, connect Slack in the agent settings, and paste the instruction prompt. The trigger and database relations are pre-configured.</span>
+  </div>
+
+  <ul class="step-list">
+    <li class="step-item">
+      <div class="step-num step-num-blue">1</div>
+      <div class="step-content">
+        <div class="step-title">Duplicate the starter workspace</div>
+        <div class="step-desc">Opens a pre-built Notion workspace with Meeting Notes, Tasks, and Team Directory already configured with the correct schemas and views.</div>
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num step-num-blue">2</div>
+      <div class="step-content">
+        <div class="step-title">Add team members to Team Directory</div>
+        <div class="step-desc">One row per person: Full Name (as they'll be mentioned in meetings), Notion User, Slack Handle. The Agent View is pre-built — no configuration needed.</div>
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num step-num-blue">3</div>
+      <div class="step-content">
+        <div class="step-title">Create the Custom Agent</div>
+        <div class="step-desc">In Notion Settings → Connections → Custom Agents. Name it "Meeting to Action". Set trigger: Meeting Notes DB, Status property changed. Grant access to Meeting Notes (edit), Tasks (edit), Team Directory Agent View (view).</div>
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num step-num-blue">4</div>
+      <div class="step-content">
+        <div class="step-title">Connect Slack and paste the prompt</div>
+        <div class="step-desc">Add Slack in the agent Connections panel. Grant Post permission to your target channel. Paste the instruction prompt from above into the Instructions field. Update the default Slack channel name at the top.</div>
+      </div>
+    </li>
+    <li class="step-item">
+      <div class="step-num step-num-blue">5</div>
+      <div class="step-content">
+        <div class="step-title">Optional: connect Notion Calendar</div>
+        <div class="step-desc">For zero-touch mode. Connect Notion Calendar to your Google Calendar, set the default AI Meeting Notes database to Meeting Notes. Add a Notion Automation: page created in Meeting Notes → set Status = "Needs Processing".</div>
+      </div>
+    </li>
+  </ul>
+
+  <div class="callout callout-gray">
+    <span class="callout-icon">📎</span>
+    <span class="callout-text"><strong>Starter Kit:</strong> <a href="https://fine-holly-02a.notion.site/Hackathon-Starter-Kit-Duplicate-Me-7e25e722d624429ca459f9911d7a5c14" target="_blank">Hackathon Starter Kit — Duplicate Me →</a><br>Includes pre-built database schemas, Agent View, and example meeting notes.</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="footer">
+    <span>Built by Artur Serra · Notion Custom Agent Buildathon 2026</span>
+    <span class="notion-logo">Built on Notion</span>
+  </div>
+
+</div>
+
+</body>
+</html>
